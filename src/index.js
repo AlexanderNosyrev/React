@@ -1,12 +1,65 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {createStore} from 'redux';
+import {Provider} from 'react-redux';
 import './index.css';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const initialState = [
+	'RandomString1',
+	'RandomString2'
+]
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+function createSomeList(state = initialState, action){
+	if(action.type === 'ADD_STRING'){
+		return [
+		...state,
+		action.payload
+		];
+	}
+	return state;
+}
+
+const store = createStore(createSomeList);
+
+ReactDOM.render(
+	<Provider store={store}>
+		<App />
+	</Provider>,
+	document.getElementById('root'));
+
+
+// import {createStore} from 'redux';
+
+// function createSomeList(state = [], action){
+// 	if(action.type === 'ADD_STRING'){
+// 		return [
+// 		...state,
+// 		action.payload
+// 		];
+// 	}
+// 	return state;
+// }
+
+// const store = createStore(createSomeList);
+
+// const addString = document.querySelector('.addStr');
+// const strInput = document.querySelector('.strInput');
+// const list = document.querySelector('.list');
+
+// store.subscribe(() => {
+// 	list.innerHTML = '';
+// 	strInput.value = '';
+// 	store.getState().forEach( string => {
+// 		const li = document.createElement('li');
+// 		li.textContent = string;
+// 		list.appendChild(li);
+// 	} )
+// })
+
+// addString.addEventListener( 'click', () => {
+// 	const strInputVal = strInput.value;
+// 	store.dispatch({type: 'ADD_STRING', payload: strInputVal})
+// } )
+
+

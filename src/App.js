@@ -1,11 +1,22 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
   render() {
+    console.log(this.props.testStore)
     return (
       <div className="App">
+      <div>
+        <input type="text" />
+        <button>Add Random String</button>
+        <ul>
+          {this.props.testStore.map((string, index) => 
+            <li key = {index}>{string}</li>
+          )}
+        </ul>
+      </div>
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
@@ -25,4 +36,9 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(
+  state =>({
+    testStore: state
+  }),
+  dispatch => ({})
+  )(App)
